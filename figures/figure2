@@ -1,0 +1,20 @@
+#Figure2
+###
+library(dplyr)
+
+###################################plot A, upset R#######################################
+
+#############各个方法的蛋白overlap
+#############方法1：ldsc
+temp1<-fread("/home/leo/UK_Biobank_ss/Cholelithiasis_EU/meta_results/ldsc/Cholelithiasis_meta_Multi_tissue_gene_expr.cell_type_results.txt")
+#分类
+
+####gtex
+gtex<-fread("/home/leo/ldsc/GTEX_tissues.csv")
+# 假设 temp1 是您的数据框
+temp1$Tissue <- gsub("_", " ", temp1$Name)
+ldsc_gtex<-na.omit(left_join(temp1, gtex, by="Tissue",keep))
+  #temp1[which(temp1$Name %in% gtex),]
+####mesh
+mesh<-fread("/home/leo/ldsc/MESH.csv")
+ldsc_mesh<-na.omit(left_join(temp1, mesh, by="Tissue",keep))
